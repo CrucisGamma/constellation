@@ -32,6 +32,8 @@ import au.gov.asd.tac.constellation.utilities.icon.UserInterfaceIconProvider;
 import au.gov.asd.tac.constellation.utilities.text.SeparatorConstants;
 import au.gov.asd.tac.constellation.views.tableview2.io.TableViewPreferencesIOUtilities;
 import au.gov.asd.tac.constellation.views.tableview2.state.TableViewState;
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -182,6 +184,15 @@ public final class TableViewPane extends BorderPane {
         table.itemsProperty().addListener((v, o, n) -> table.refresh());
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         table.setPadding(new Insets(5));
+        table.setOnMouseEntered(e -> {
+            try {
+                final Robot robot = new Robot();
+                robot.mousePress(16);
+                robot.mouseRelease(16);
+            } catch (AWTException ex) {
+                ex.printStackTrace();
+            }
+        });
         setCenter(table);
 
         // TODO: experiment with caching
